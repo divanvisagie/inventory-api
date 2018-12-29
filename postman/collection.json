@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3415bd07-e72b-476f-bfcb-d1e09dcd2fd4",
+		"_postman_id": "c342d9da-388b-4ce2-b191-0f2dd9738d24",
 		"name": "Inventory API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -46,6 +46,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"signup"
 					]
 				}
@@ -92,6 +95,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"signup"
 					]
 				}
@@ -137,6 +143,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"signup"
 					]
 				}
@@ -195,6 +204,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"login"
 					]
 				}
@@ -251,6 +263,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"login"
 					]
 				}
@@ -306,6 +321,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"login"
 					]
 				}
@@ -361,6 +379,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"login"
 					]
 				}
@@ -416,6 +437,9 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
+						"auth",
 						"login"
 					]
 				}
@@ -462,6 +486,8 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
 						"user",
 						"profile"
 					]
@@ -505,6 +531,8 @@
 					],
 					"port": "3000",
 					"path": [
+						"api",
+						"v1",
 						"user",
 						"profile"
 					]
