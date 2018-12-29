@@ -7,7 +7,9 @@ const log = require('../logging/log')
 
 function createStoreService() {
     const create = async (store) => {
-        const existing = await StoreModel.findOne({ name: store.name, user: store.user })
+        const existing = await StoreModel.findOne({ name: store.name, user: store.user }).catch(e => {
+            debug('error finding existing store')
+        })
         if (!existing) {
             store.items = []
             debug('No store exist for user', store.user)

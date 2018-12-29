@@ -4,8 +4,7 @@ const Schema = mongoose.Schema
 const StoreSchema = new Schema({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     slots: {
         type: Number,
