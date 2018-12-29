@@ -1,0 +1,516 @@
+{
+	"info": {
+		"_postman_id": "3415bd07-e72b-476f-bfcb-d1e09dcd2fd4",
+		"name": "Inventory API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Signup - Full Object",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "275e758c-778f-4fd1-8299-647592ae96f8",
+						"exec": [
+							"pm.test(\"Successful signup\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"EMAIL\", jsonData.user.email);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"{{$timestamp}}@gmail.com\",\n\t\"password\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup - Missing Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "275e758c-778f-4fd1-8299-647592ae96f8",
+						"exec": [
+							"pm.test(\"Signup with missing password\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"{{$timestamp}}@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup - Missing Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "275e758c-778f-4fd1-8299-647592ae96f8",
+						"exec": [
+							"pm.test(\"Signup with missing email\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4371681e-97bc-4194-b9d9-c01ae620a7e4",
+						"exec": [
+							"pm.test(\"Successful login request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"BEARER_TOKEN\", \"Bearer \" + jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BEARER_TOKEN",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"{{EMAIL}}\",\n\t\"password\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - Invalid Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4371681e-97bc-4194-b9d9-c01ae620a7e4",
+						"exec": [
+							"pm.test(\"Login with invalid email\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BEARER_TOKEN",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"shouldnot@beindatabase.com.fake\",\n\t\"password\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - No Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4371681e-97bc-4194-b9d9-c01ae620a7e4",
+						"exec": [
+							"pm.test(\"Login with no email\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BEARER_TOKEN",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - Wrong Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4371681e-97bc-4194-b9d9-c01ae620a7e4",
+						"exec": [
+							"pm.test(\"Login with wrong password\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BEARER_TOKEN",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"{{EMAIL}}\",\n\t\"password\": \"wrong\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - No Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4371681e-97bc-4194-b9d9-c01ae620a7e4",
+						"exec": [
+							"pm.test(\"Login with no password\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BEARER_TOKEN",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"{{EMAIL}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile - With Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f14d84db-1352-41ce-91a2-38178bb81b91",
+						"exec": [
+							"pm.test(\"View profile with token\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{BEARER_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/user/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile - Without Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f14d84db-1352-41ce-91a2-38178bb81b91",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"View profile without token\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/user/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
