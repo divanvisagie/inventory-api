@@ -676,6 +676,44 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Add item to store",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{BEARER_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Arrow of testing\",\n\t\"description\": \"Just another item\"\n\t\"count\": 100\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/item/5c27a4981f04219798d2d47c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"5c27a4981f04219798d2d47c"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
