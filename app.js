@@ -27,9 +27,11 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 const authentication = require('./src/routes/authentication')
 const user = require('./src/routes/user')
+const store = require('./src/routes/store')
 
 app.use('/api/v1/auth', authentication)
 app.use('/api/v1/user', requiresToken , user)
+app.use('/api/v1/store', requiresToken, store)
 
 app.listen(config.port, () => {
     debug(`Server started on port ${config.port}`)
