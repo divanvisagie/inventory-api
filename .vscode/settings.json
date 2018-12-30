@@ -1,0 +1,9 @@
+{
+    "mongoRunner": {
+        "connections": [
+            {
+                "url": "mongodb://localhost:27017/inventory-api"
+            }
+        ]
+    }
+}

@@ -26,15 +26,8 @@ require('./src/auth/auth')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
-const authentication = require('./src/routes/authentication')
-const user = require('./src/routes/user')
-const store = require('./src/routes/store')
-const item = require('./src/routes/item')
-
-app.use('/api/v1/auth', authentication)
-app.use('/api/v1/user', requiresToken , user)
-app.use('/api/v1/store', requiresToken, store)
-app.use('/api/v1/item', requiresToken, item)
+const {addRoutes} = require('./src/endpoints')
+addRoutes(app)
 
 app.listen(config.port, () => {
     debug(`Server started on port ${config.port}`)
