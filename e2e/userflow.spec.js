@@ -4,69 +4,68 @@ const debug = require('debug')('e2e:userflow')
 
 const root = 'http://localhost:3000'
 
-const api = {
-    get(endpoint) {
-        let self = this
-
-        self.headers = {
+class ApiRequest {
+    constructor(endpoint) {
+        this.headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        },
+        }
+        this.endpoint = endpoint
+    }
 
-        self.withToken = (token) => {
-            this.headers['Authorization'] = `Bearer ${token}`
-            return self
+    withToken (token) {
+        this.headers['Authorization'] = `Bearer ${token}`
+        return this
+    }
+
+    async execute () {
+        const url = `${root}${this.endpoint}`
+
+        const fetchOptions = {
+            method: this.method,
+            headers: this.headers,
         }
 
-        self.execute = async () => {
-            const url = `${root}${endpoint}`
-            const response = await fetch(url, {
-                headers: this.headers,
-            }).then(r => {
-                return r
-            }).catch(e => {
-                console.error(e)
-                done()
-            })
-            return response
+        if (this.body) {
+            fetchOptions.body = this.body
         }
 
-        return self
+        const response = await fetch(url, fetchOptions).then(r => {
+            return r
+        }).catch(e => {
+            console.error(e)
+        })
+        return response
+    }
+}
+
+
+const api = {
+    
+
+
+    get(endpoint) {
+        class Get extends ApiRequest {
+            constructor (endpoint) {
+                super(endpoint)
+                this.method = 'GET'
+            }
+        }
+        return new Get(endpoint)
     },
     post(endpoint) {
-        let self = this
+        class Post extends ApiRequest {
+            constructor(endpoint) {
+                super(endpoint)
+                this.method = 'POST'
+            }
 
-        self.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-
-        self.withBody = (body) => {
-            this.body = body
-            return self
-        },
-
-        self.withToken = (token) => {
-            this.headers['Authorization'] = `Bearer ${token}`
-            return self
+            withBody (body) {
+                this.body = JSON.stringify(body)
+                return this
+            }
         }
-
-        self.execute = async () => {
-            const url = `${root}${endpoint}`
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: this.headers,
-                body:  JSON.stringify(this.body)
-            }).then(r => {
-                return r
-            }).catch(e => {
-                console.error(e)
-                done()
-            })
-            return response
-        }
-
-        return self
+        return new Post(endpoint)
     }
 }
 
@@ -136,7 +135,7 @@ describe('Userflow', () => {
     describe('GET /api/v1/user/profile with token', () => {
         let response 
         let body
-        before(async ()=> {
+        before(async () => {
             response = await api.get('/api/v1/user/profile')
                 .withToken(token)
                 .execute()
