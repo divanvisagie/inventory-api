@@ -1,73 +1,10 @@
 const { expect } = require('chai')
-const fetch = require('node-fetch')
-const debug = require('debug')('e2e:userflow')
+const debug = require('debug')('e2e:userflow.spec')
 
 const root = 'http://localhost:3000'
 
-class ApiRequest {
-    constructor(endpoint) {
-        this.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-        this.endpoint = endpoint
-    }
+const api = require('./api-inspector')(root)
 
-    withToken (token) {
-        this.headers['Authorization'] = `Bearer ${token}`
-        return this
-    }
-
-    async execute () {
-        const url = `${root}${this.endpoint}`
-
-        const fetchOptions = {
-            method: this.method,
-            headers: this.headers,
-        }
-
-        if (this.body) {
-            fetchOptions.body = this.body
-        }
-
-        const response = await fetch(url, fetchOptions).then(r => {
-            return r
-        }).catch(e => {
-            console.error(e)
-        })
-        return response
-    }
-}
-
-
-const api = {
-    
-
-
-    get(endpoint) {
-        class Get extends ApiRequest {
-            constructor (endpoint) {
-                super(endpoint)
-                this.method = 'GET'
-            }
-        }
-        return new Get(endpoint)
-    },
-    post(endpoint) {
-        class Post extends ApiRequest {
-            constructor(endpoint) {
-                super(endpoint)
-                this.method = 'POST'
-            }
-
-            withBody (body) {
-                this.body = JSON.stringify(body)
-                return this
-            }
-        }
-        return new Post(endpoint)
-    }
-}
 
 describe('Attempting routes without token', () => {
 
